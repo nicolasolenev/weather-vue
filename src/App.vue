@@ -1,9 +1,9 @@
 <template>
-  <div className="container">
-    <div className="weather">
-      <!-- <Search /> -->
-      <div className="weather__container">
-        <!-- <Info /> -->
+  <div class="container">
+    <div class="weather">
+      <Search @set-data="setData" @set-forecast-data="setForecast" />
+      <div class="weather__container">
+        <Info :data="data" :forecastData="forecastData" />
         <!-- <Locations /> -->
       </div>
     </div>
@@ -11,9 +11,29 @@
 </template>
 
 <script>
+import Search from './components/Search.vue';
+import Info from './components/Info.vue';
+
 export default {
   name: 'App',
-  components: {},
+  components: {
+    Search,
+    Info,
+  },
+  data() {
+    return {
+      data: null,
+      forecastData: null,
+    };
+  },
+  methods: {
+    setData(data) {
+      this.data = data;
+    },
+    setForecast(data) {
+      this.forecastData = data;
+    },
+  },
 };
 </script>
 
