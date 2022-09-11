@@ -1,26 +1,42 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div className="container">
+    <div className="weather">
+      <!-- <Search /> -->
+      <div className="weather__container">
+        <!-- <Info /> -->
+        <!-- <Locations /> -->
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  components: {},
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="scss">
+@import '@/assets/variables.scss';
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.weather {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 600px;
+  margin-top: 20px;
+  border: $border;
+
+  &__container {
+    display: flex;
+    flex-wrap: wrap;
+  }
 }
 </style>
