@@ -7,7 +7,7 @@
         <button
           class="locations__city"
           title="get weather"
-          @click="getWeather(location)"
+          @click="getRequest(location)"
         >
           {{ location }}
         </button>
@@ -25,26 +25,20 @@
 <script>
 export default {
   name: 'LocationsArea',
-  props: {
-    // locations: {
-    //   type: Array,
-    //   required: true,
-    // },
-  },
+
   computed: {
     locations() {
       return this.$store.state.locations;
     },
   },
-  data() {
-    return {};
-  },
+
   methods: {
-    getWeather(location) {
-      this.$emit('get-city', location);
+    getRequest(location) {
+      this.$store.dispatch('fetchData', { location });
     },
+
     deleteLocation(location) {
-      this.$emit('delete-location', location);
+      this.$store.commit('deleteLocation', location);
     },
   },
 };

@@ -1,6 +1,6 @@
 <template>
   <div class="search">
-    <form class="search__form" @submit.prevent="onSubmit">
+    <form class="search__form" @submit.prevent="getRequest">
       <input
         class="search__input"
         type="text"
@@ -16,19 +16,22 @@
 <script>
 export default {
   name: 'SearchField',
+
   data() {
     return {
       value: '',
     };
   },
+
   methods: {
-    onSubmit() {
+    getRequest() {
       const location = this.value.trim();
       if (location === '') {
         return;
       }
 
-      this.$store.commit('updateLocation', location);
+      this.$store.dispatch('fetchData', { location });
+
       this.value = '';
     },
   },

@@ -1,23 +1,23 @@
 <template>
-  <div className="weather__details">
+  <div className="weather__details" v-if="data">
     <ul className="weather__details_ul">
       <li className="weather__details_li weather__details_city">
-        {{ data?.name }}
+        {{ data.name }}
       </li>
       <li className="weather__details_li">
-        Temperature: {{ data && Math.round(data.main.temp) + '°' }}
+        Temperature: {{ Math.round(data.main.temp) + '°' }}
       </li>
       <li className="weather__details_li">
-        Feels like: {{ data && Math.round(data.main.feels_like) + '°' }}
+        Feels like: {{ Math.round(data.main.feels_like) + '°' }}
       </li>
       <li className="weather__details_li">
-        Weather: {{ data && data.weather[0].main }}
+        Weather: {{ data.weather[0].main }}
       </li>
       <li className="weather__details_li">
-        Sunrise: {{ data && time(data.sys.sunrise) }}
+        Sunrise: {{ time(data.sys.sunrise) }}
       </li>
       <li className="weather__details_li">
-        Sunset: {{ data && time(data.sys.sunset) }}
+        Sunset: {{ time(data.sys.sunset) }}
       </li>
     </ul>
   </div>
@@ -28,15 +28,16 @@ import { getTime } from '../../helpers';
 
 export default {
   name: 'WeatherDetails',
-  props: {
-    data: {
-      type: [Object, null],
-      required: true,
-    },
-  },
+
   methods: {
     time(dataTime) {
       return getTime(dataTime);
+    },
+  },
+
+  computed: {
+    data() {
+      return this.$store.state.data.weather;
     },
   },
 };

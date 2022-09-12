@@ -1,9 +1,9 @@
 <template>
-  <div class="weather__forecast">
-    <h2 class="weather__forecast_city">{{ data?.city?.name }}</h2>
+  <div class="weather__forecast" v-if="forecast">
+    <h2 class="weather__forecast_city">{{ forecast.city.name }}</h2>
 
-    <div class="weather__forecast_cards" v-if="data?.list">
-      <ForecastCard v-for="data of data.list" :key="data.dt" :data="data" />
+    <div class="weather__forecast_cards">
+      <ForecastCard v-for="data of forecast.list" :key="data.dt" :data="data" />
     </div>
   </div>
 </template>
@@ -13,13 +13,14 @@ import ForecastCard from './ForecastCard';
 
 export default {
   name: 'WeatherForecast',
+
   components: {
     ForecastCard,
   },
-  props: {
-    data: {
-      type: [Object, null],
-      required: true,
+
+  computed: {
+    forecast() {
+      return this.$store.state.data.forecast;
     },
   },
 };

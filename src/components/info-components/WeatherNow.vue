@@ -1,15 +1,16 @@
 <template>
-  <div class="weather__now">
+  <div class="weather__now" v-if="weather">
     <div class="weather__temperature">
-      {{ data && Math.round(data.main.temp) + '°' }}
+      {{ Math.round(weather.main.temp) + '°' }}
     </div>
-    <img class="weather__icon" :src="data && imgSrc" />
-    <div class="weather__city">{{ data?.name }}</div>
+    <img class="weather__icon" :src="imgSrc" />
+    <div class="weather__city">{{ weather.name }}</div>
     <div class="weather__add-location">
       <button
+        v-if="isNotSaved"
         class="weather__add-location-button"
         title="add to favorite"
-        @click="addLocation"
+        @click="saveLocation"
       />
     </div>
   </div>
@@ -20,20 +21,26 @@ import * as api from '../../api';
 
 export default {
   name: 'WeatherNow',
-  props: {
-    data: {
-      type: [Object, null],
-      required: true,
-    },
-  },
+
   computed: {
     imgSrc() {
-      return api.getIconUrl({ iconId: this.data.weather[0].icon });
+      return this.weather
+        ? api.getIconUrl({ iconId: this.weather.weather[0].icon })
+        : '';
+    },
+
+    weather() {
+      return this.$store.state.data.weather;
+    },
+
+    isNotSaved() {
+      return !this.$store.state.locations.includes(this.weather.name);
     },
   },
+
   methods: {
-    addLocation() {
-      this.$store.commit('addLocation', this.data.name);
+    saveLocation() {
+      this.$store.commit('addLocation', this.weather.name);
     },
   },
 };

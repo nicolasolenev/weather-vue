@@ -1,13 +1,9 @@
 <template>
   <div class="info">
     <div class="info__content">
-      <WeatherNow
-        v-if="activeTab === tabs.now"
-        :data="data"
-        @add-location="addLocation"
-      />
-      <WeatherDetails v-else-if="activeTab === tabs.details" :data="data" />
-      <WeatherForecast v-else :data="forecastData" />
+      <WeatherNow v-if="activeTab === tabs.now" />
+      <WeatherDetails v-else-if="activeTab === tabs.details" />
+      <WeatherForecast v-else />
     </div>
 
     <div class="info__tabs">
@@ -32,22 +28,14 @@ import WeatherForecast from './info-components/WeatherForecast.vue';
 
 export default {
   name: 'InfoComponent',
-  props: {
-    data: {
-      type: [Object, null],
-      required: true,
-    },
-    forecastData: {
-      type: [Object, null],
-      required: true,
-    },
-  },
+
   components: {
     TabButton,
     WeatherNow,
     WeatherDetails,
     WeatherForecast,
   },
+
   data() {
     return {
       tabs: {
@@ -58,12 +46,10 @@ export default {
       activeTab: 'Now',
     };
   },
+
   methods: {
     setActiveTab(tabName) {
       this.activeTab = tabName;
-    },
-    addLocation(location) {
-      this.$emit('add-location', location);
     },
   },
 };
