@@ -6,7 +6,11 @@
     <img class="weather__icon" :src="data && imgSrc" />
     <div class="weather__city">{{ data?.name }}</div>
     <div class="weather__add-location">
-      <button class="weather__add-location-button" title="add to favorite" />
+      <button
+        class="weather__add-location-button"
+        title="add to favorite"
+        @click="addLocation"
+      />
     </div>
   </div>
 </template>
@@ -25,6 +29,11 @@ export default {
   computed: {
     imgSrc() {
       return api.getIconUrl({ iconId: this.data.weather[0].icon });
+    },
+  },
+  methods: {
+    addLocation() {
+      this.$store.commit('addLocation', this.data.name);
     },
   },
 };

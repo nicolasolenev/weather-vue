@@ -1,7 +1,11 @@
 <template>
   <div class="info">
     <div class="info__content">
-      <WeatherNow v-if="activeTab === tabs.now" :data="data" />
+      <WeatherNow
+        v-if="activeTab === tabs.now"
+        :data="data"
+        @add-location="addLocation"
+      />
       <WeatherDetails v-else-if="activeTab === tabs.details" :data="data" />
       <WeatherForecast v-else :data="forecastData" />
     </div>
@@ -57,6 +61,9 @@ export default {
   methods: {
     setActiveTab(tabName) {
       this.activeTab = tabName;
+    },
+    addLocation(location) {
+      this.$emit('add-location', location);
     },
   },
 };

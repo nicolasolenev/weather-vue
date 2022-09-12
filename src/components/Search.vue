@@ -5,7 +5,7 @@
         class="search__input"
         type="text"
         placeholder="Aktobe"
-        v-model="city"
+        v-model="value"
       />
 
       <button class="search__button" title="get weather" />
@@ -14,29 +14,22 @@
 </template>
 
 <script>
-import * as api from '../api';
-
 export default {
   name: 'SearchField',
   data() {
     return {
-      city: '',
+      value: '',
     };
   },
   methods: {
-    async onSubmit(e) {
-      e.target.reset();
-      const response = await fetch(
-        api.getUrlByCity(api.API_TYPE.WEATHER, this.city)
-      );
-      const data = await response.json();
-      this.$emit('set-data', data);
+    onSubmit() {
+      const location = this.value.trim();
+      if (location === '') {
+        return;
+      }
 
-      const forecastResponse = await fetch(
-        api.getUrlByCity(api.API_TYPE.FORECAST, this.city)
-      );
-      const forecastData = await forecastResponse.json();
-      this.$emit('set-forecast-data', forecastData);
+      this.$store.commit('updateLocation', location);
+      this.value = '';
     },
   },
 };
